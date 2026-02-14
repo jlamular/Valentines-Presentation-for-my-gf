@@ -379,27 +379,31 @@ body {
   .click-hint { font-size: 11px; margin-top: 14px; }
 }
 
-/* Mobile: lighter 3D box (less glow = less lag) */
+/* Mobile: static 3D box – walang blink/lag, soft colors */
 @media (max-width: 768px) {
   .face {
-    animation: breathingGlowMobile 4s ease-in-out infinite;
+    animation: none;
+    box-shadow: 0 0 8px rgba(180, 120, 150, 0.2);
     border-width: 1.5px;
+    border-color: #c98aa8 !important;
   }
+  .face.front  { border-color: #c98aa8 !important; }
+  .face.back   { border-color: #b87a98 !important; }
+  .face.left   { border-color: #d09ab8 !important; }
+  .face.right  { border-color: #c08aa0 !important; }
+  .face.top    { border-color: #d8aac8 !important; }
+  .face.bottom { border-color: #b87a98 !important; }
   .cell {
-    animation: cellBreathingGlowMobile 4s ease-in-out infinite;
-    border-width: 1px;
+    animation: none;
+    box-shadow: inset 0 0 8px rgba(180, 120, 150, 0.15), 0 0 4px rgba(160, 100, 130, 0.12);
+    border-color: rgba(180, 120, 150, 0.35) !important;
+    background: linear-gradient(135deg, #5a4050, #6e5060, #805870) !important;
   }
-}
-@keyframes breathingGlowMobile {
-  0%, 100% { box-shadow: 0 0 12px rgba(255, 105, 180, 0.25); }
-  50% { box-shadow: 0 0 24px rgba(255, 105, 180, 0.45); }
-}
-@keyframes cellBreathingGlowMobile {
-  0%, 100% {
-    box-shadow: inset 0 0 12px rgba(255, 105, 180, 0.2), 0 0 6px rgba(255, 20, 147, 0.25);
+  .scene {
+    will-change: auto;
   }
-  50% {
-    box-shadow: inset 0 0 18px rgba(255, 105, 180, 0.35), 0 0 12px rgba(255, 20, 147, 0.4);
+  .cube {
+    will-change: transform;
   }
 }
 
@@ -757,24 +761,24 @@ body {
   color: #f0e4ec;
   font-weight: 600;
   white-space: pre-line;
-  letter-spacing: -0.02em;
-  word-spacing: -0.04em;
+  letter-spacing: 0.03em;
+  word-spacing: 0.12em;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 @media (max-width: 768px) {
-  .typewriter-text { font-size: 24px; }
+  .typewriter-text { font-size: 26px; letter-spacing: 0.04em; word-spacing: 0.14em; }
 }
 @media (max-width: 600px) {
-  .typewriter-text { font-size: 20px; }
+  .typewriter-text { font-size: 22px; letter-spacing: 0.04em; word-spacing: 0.15em; }
   .typewriter-box { padding: 0 20px; }
 }
 @media (max-width: 480px) {
-  .typewriter-text { font-size: 16px; line-height: 1.4; }
-  .typewriter-box { padding: 0 16px; }
+  .typewriter-text { font-size: 19px; line-height: 1.45; letter-spacing: 0.05em; word-spacing: 0.16em; }
+  .typewriter-box { padding: 0 18px; }
 }
 @media (max-width: 360px) {
-  .typewriter-text { font-size: 14px; line-height: 1.35; }
-  .typewriter-box { padding: 0 12px; }
+  .typewriter-text { font-size: 17px; line-height: 1.4; letter-spacing: 0.05em; word-spacing: 0.18em; }
+  .typewriter-box { padding: 0 14px; }
 }
 .typewriter-text .char {
   opacity: 0;
