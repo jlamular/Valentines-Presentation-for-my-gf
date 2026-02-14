@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💝 Valentine's Memory Box</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+
+<!-- <div id="heart-rain" aria-hidden="true"></div> -->
+
+
+<audio id="bg-music">
+  <source src="December Avenue - Saksi Ang Langit (OFFICIAL MUSIC VIDEO).mp3" type="audio/mpeg">
+</audio>
+
+
+<div id="entrance-page">
+  <div class="entrance-card">
+    <div id="entrance-form">
+      <h1>Who's this? 💕</h1>
+      <p class="sub">Enter your name to open the surprise</p>
+      <input type="text" id="entrance-name" placeholder="Type your name..." autocomplete="off">
+      <button type="button" class="entrance-btn" id="entrance-submit">Enter</button>
+    </div>
+    <div id="entrance-wrong">
+      <div class="teddy-no-no" aria-hidden="true">🧸</div>
+      <p class="wrong-msg">No no!</p>
+      <p class="wrong-sub">That's not the right name. Try again? 💕</p>
+      <button type="button" class="try-again-btn" id="try-again-btn">Try again</button>
+    </div>
+  </div>
+</div>
+
+
+<div id="typewriter-page">
+  <div class="typewriter-box">
+    <p id="typewriter-output" class="typewriter-text" aria-live="polite"></p>
+  </div>
+</div>
+
+
+<div id="cube-view" class="entrance-hidden">
+  <div class="scene" id="scene">
+    <div class="cube" id="cube">
+    
+      <div class="face front">
+        <div class="cell"><img src="" alt=""></div>
+        <div class="cell"><img src="" alt=""></div>
+        <div class="cell"><img src="" alt=""></div>
+        <div class="cell"><img src="" alt=""></div>
+      </div>
+
+     
+      <div class="face back">
+        <div class="cell"><img src="" alt=""></div>
+        <div class="cell"><img src="" alt=""></div>
+        <div class="cell"><img src="" alt=""></div>
+        <div class="cell"><img src="" alt=""></div>
+      </div>
+
+      <div class="face left">
+        <div class="cell"><img src="" alt=""></div>
+        <div class="cell"><img src="" alt=""></div>
+        <div class="cell"><img src="" alt=""></div>
+        <div class="cell"><img src="" alt=""></div>
+      </div>
+
+    
+      <div class="face right">
+        <div class="cell"><img src="" alt=""></div>
+        <div class="cell"><img src="" alt=""></div>
+        <div class="cell"><img src="" alt=""></div>
+        <div class="cell"><img src="" alt=""></div>
+      </div>
+
+    
+      <div class="face top">
+        <div class="cell"><img src="" alt=""></div>
+        <div class="cell"><img src="" alt=""></div>
+        <div class="cell"><img src="" alt=""></div>
+        <div class="cell"><img src="" alt=""></div>
+      </div>
+
+     
+      <div class="face bottom">
+        <div class="cell"><img src="" alt=""></div>
+        <div class="cell"><img src="" alt=""></div>
+        <div class="cell"><img src="" alt=""></div>
+        <div class="cell"><img src="" alt=""></div>
+      </div>
+    </div>
+  </div>
+  <div class="click-hint">💝 Click a photo for hologram • Double click to open 💝</div>
+  <div id="hologram-container" class="hologram-overlay" aria-hidden="true"></div>
+</div>
+
+
+<div id="cinema-view">
+  <div class="cinema-container">
+    <div class="cinema-screen">
+      <video id="cinema-video" playsinline>
+        <source src="Vid/351414818_9722770524407171_2047449945446737998_n.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
