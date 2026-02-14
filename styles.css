@@ -88,7 +88,9 @@ body {
   will-change: transform;
   transition: transform 0.2s ease-out;
   transform: translate3d(0,0,0);
-  overflow: visible; 
+  overflow: visible;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .cube {
@@ -370,6 +372,36 @@ body {
   50% { opacity: 1; transform: scale(1.05); }
 }
 
+@media (max-width: 480px) {
+  .click-hint { font-size: 12px; margin-top: 18px; }
+}
+@media (max-width: 360px) {
+  .click-hint { font-size: 11px; margin-top: 14px; }
+}
+
+/* Mobile: lighter 3D box (less glow = less lag) */
+@media (max-width: 768px) {
+  .face {
+    animation: breathingGlowMobile 4s ease-in-out infinite;
+    border-width: 1.5px;
+  }
+  .cell {
+    animation: cellBreathingGlowMobile 4s ease-in-out infinite;
+    border-width: 1px;
+  }
+}
+@keyframes breathingGlowMobile {
+  0%, 100% { box-shadow: 0 0 12px rgba(255, 105, 180, 0.25); }
+  50% { box-shadow: 0 0 24px rgba(255, 105, 180, 0.45); }
+}
+@keyframes cellBreathingGlowMobile {
+  0%, 100% {
+    box-shadow: inset 0 0 12px rgba(255, 105, 180, 0.2), 0 0 6px rgba(255, 20, 147, 0.25);
+  }
+  50% {
+    box-shadow: inset 0 0 18px rgba(255, 105, 180, 0.35), 0 0 12px rgba(255, 20, 147, 0.4);
+  }
+}
 
 #cinema-view {
   position: fixed;
@@ -612,6 +644,26 @@ body {
   transform: scale(0.98);
 }
 
+@media (max-width: 480px) {
+  .entrance-card { padding: 24px 20px; max-width: 92%; }
+  .entrance-card h1 { font-size: 1.1rem; }
+  .entrance-card .sub { font-size: 0.78rem; margin-bottom: 18px; }
+  .entrance-card input { padding: 10px 14px; font-size: 0.875rem; }
+  .entrance-btn { padding: 10px 24px; font-size: 0.9rem; }
+  .wrong-msg { font-size: 0.95rem; }
+  .wrong-sub { font-size: 0.75rem; }
+  .teddy-no-no { font-size: 3rem; }
+}
+@media (max-width: 360px) {
+  .entrance-card h1 { font-size: 1rem; }
+  .entrance-card .sub { font-size: 0.72rem; }
+  .entrance-card input { font-size: 0.8125rem; }
+  .entrance-btn { font-size: 0.85rem; padding: 8px 20px; }
+  .wrong-msg { font-size: 0.9rem; }
+  .wrong-sub { font-size: 0.7rem; }
+  .teddy-no-no { font-size: 2.5rem; }
+}
+
 #entrance-wrong {
   display: none;
 }
@@ -709,8 +761,20 @@ body {
   word-spacing: -0.04em;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
+@media (max-width: 768px) {
+  .typewriter-text { font-size: 24px; }
+}
 @media (max-width: 600px) {
-  .typewriter-text { font-size: 42px; }
+  .typewriter-text { font-size: 20px; }
+  .typewriter-box { padding: 0 20px; }
+}
+@media (max-width: 480px) {
+  .typewriter-text { font-size: 16px; line-height: 1.4; }
+  .typewriter-box { padding: 0 16px; }
+}
+@media (max-width: 360px) {
+  .typewriter-text { font-size: 14px; line-height: 1.35; }
+  .typewriter-box { padding: 0 12px; }
 }
 .typewriter-text .char {
   opacity: 0;

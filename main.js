@@ -324,9 +324,30 @@ document.addEventListener('mouseup', () => {
   prevY = 0;
 });
 
-// ─── TOUCH SUPPORT ───
+// ─── TOUCH SUPPORT (mobile: tap vs drag, double-tap = open video) ───
 let initialPinchDistance = null;
 let initialZoomLevel = 1;
+let touchStartX = 0, touchStartY = 0, touchStartTime = 0;
+let lastTapTime = 0;
+let singleTapTimeout = null;
+const TAP_MOVE_THRESHOLD = 12;
+const TAP_MAX_DURATION_MS = 280;
+const DOUBLE_TAP_DELAY_MS = 420;
+
+function doWiggleOnly() {
+  cube.style.setProperty('--rotX', `${pendingRotX}deg`);
+  cube.style.setProperty('--rotY', `${pendingRotY}deg`);
+  cube.classList.remove('wiggling');
+  void cube.offsetWidth;
+  cube.classList.add('wiggling');
+  setTimeout(() => {
+    cube.classList.remove('wiggling');
+    rotX = pendingRotX;
+    rotY = pendingRotY;
+    scheduleRender();
+    startAuto();
+  }, 600);
+}
 
 scene.addEventListener('touchstart', e => {
   if (e.touches.length === 2) {
@@ -341,9 +362,12 @@ scene.addEventListener('touchstart', e => {
     initialZoomLevel = zoomLevel;
     e.preventDefault();
   } else if (e.touches.length === 1) {
-    isDragging = true;
-    prevX = e.touches[0].clientX;
-    prevY = e.touches[0].clientY;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchStartTime = Date.now();
+    prevX = touchStartX;
+    prevY = touchStartY;
+    isDragging = false;
     stopAuto();
     e.preventDefault();
   }
@@ -362,16 +386,23 @@ document.addEventListener('touchmove', e => {
     zoomLevel = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoomLevel));
     updateZoom();
     e.preventDefault();
-  } else if (isDragging && e.touches.length === 1) {
-    const dx = e.touches[0].clientX - prevX;
-    const dy = e.touches[0].clientY - prevY;
-    pendingRotY += dx * 0.45;
-    pendingRotX -= dy * 0.45;
-    pendingRotX = Math.max(-85, Math.min(85, pendingRotX));
-    prevX = e.touches[0].clientX;
-    prevY = e.touches[0].clientY;
-    scheduleRender();
-    e.preventDefault();
+  } else if (e.touches.length === 1) {
+    const dx = Math.abs(e.touches[0].clientX - touchStartX);
+    const dy = Math.abs(e.touches[0].clientY - touchStartY);
+    if (!isDragging && (dx > TAP_MOVE_THRESHOLD || dy > TAP_MOVE_THRESHOLD)) {
+      isDragging = true;
+    }
+    if (isDragging) {
+      const moveX = e.touches[0].clientX - prevX;
+      const moveY = e.touches[0].clientY - prevY;
+      pendingRotY += moveX * 0.45;
+      pendingRotX -= moveY * 0.45;
+      pendingRotX = Math.max(-85, Math.min(85, pendingRotX));
+      prevX = e.touches[0].clientX;
+      prevY = e.touches[0].clientY;
+      scheduleRender();
+      e.preventDefault();
+    }
   }
 }, { passive: false });
 
@@ -380,10 +411,26 @@ document.addEventListener('touchend', e => {
     initialPinchDistance = null;
   }
   if (e.touches.length === 0) {
+    const now = Date.now();
+    const wasTap = !isDragging && (now - touchStartTime) < TAP_MAX_DURATION_MS;
+
     if (isDragging) {
       isDragging = false;
+      scheduleAutoResume();
+    } else if (wasTap) {
+      if (now - lastTapTime < DOUBLE_TAP_DELAY_MS) {
+        if (singleTapTimeout) clearTimeout(singleTapTimeout);
+        singleTapTimeout = null;
+        lastTapTime = 0;
+        explodeCubeThenOpenCinema();
+      } else {
+        lastTapTime = now;
+        singleTapTimeout = setTimeout(() => {
+          singleTapTimeout = null;
+          doWiggleOnly();
+        }, DOUBLE_TAP_DELAY_MS);
+      }
     }
-    scheduleAutoResume();
   }
 });
 
